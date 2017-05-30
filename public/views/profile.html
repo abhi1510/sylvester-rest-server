@@ -5,30 +5,13 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
       <div class="well">
-
-        <table class="">
-          <tbody>
-            <tr>
-              <td>Email</td>
-              <td>{{profile.email}}</td>
-            </tr>
-            <tr>
-              <td>Date of birth</td>
-              <td>{{profile.dob | date: "dd-MMM-yyyy "}}</td>
-            </tr>
-            <tr>
-              <td>Status</td>
-              <td>{{profile.status}}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>Welcome {{profile.username}}</h2>
+        <h2 class="text-center">Welcome {{profile.username}}</h2>
         <h3>Your details are:</h3>
         <h4>Email: {{profile.email}}</h4>
         <h4>Date of birth: {{profile.dob | date}}</h4>
-        <h4>Status: {{profile.status}}</h4>
-        <button type="button" class="btn btn-primary">Update</button>
+        <h4>Status: {{profile.status}}</h4> <br>
+        <button type="button" class="btn btn-primary" ng-click="goHome()">Go Home</button>
+        <button type="button" class="btn btn-primary" ng-click="updateUserProfile()">Update</button>        
       </div>
     </div>
     <div class="col-sm-2"></div>

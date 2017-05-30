@@ -5,7 +5,7 @@
       <p style="margin-bottom:30px;"></p>
       <form class="form-horizontal">
         <div class="well">
-          <h3 class="text-warning">Register with us</h3>
+          <h3 class="text-warning">Update your profile</h3>
           <p style="margin-bottom:30px;"></p>
           <div class="form-group">
             <label for="username" class="col-lg-2 control-label">Username</label>
@@ -39,14 +39,13 @@
           </div>
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-              <button type="reset" class="btn btn-default">Cancel</button>
-              <button type="submit" class="btn btn-primary" ng-click="registerUser()">Submit</button>
+              <button type="submit" class="btn btn-primary" ng-click="goHome()">Go Home</button>
+              <button type="submit" class="btn btn-primary" ng-click="updateUser()">Update</button>              
             </div>
           </div>
         </div>
       </form>
       <p class="text-danger">{{message}}</p>
-
     </div>
     <div class="col-sm-2"></div>
   </div>

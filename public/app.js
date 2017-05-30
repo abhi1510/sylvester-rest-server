@@ -16,14 +16,21 @@ app.config(function($routeProvider) {
         templateUrl : "views/profile.html",
         controller: "ProfileController"
     })
+    .when("/update", {
+        templateUrl : "views/update.html",
+        controller: "UpdateController"
+    })
 
 });
 
 app.factory('UserData', function(){
   var user = {}
+  var token = ""
   return {
     setUser: setUser,
-    getUser: getUser
+    getUser: getUser,
+    setToken: setToken,
+    getToken: getToken
   }
   function setUser(user) {
     this.user = user;
@@ -31,11 +38,16 @@ app.factory('UserData', function(){
   function getUser() {
     return this.user;
   }
+  function setToken(token) {
+    this.token = token;
+  }
+  function getToken() {
+    return this.token;
+  }
 })
 
 app.controller("LoginController", function($scope, $http, $location, UserData) {
     $scope.user = {};
-    $scope.token = "";
 
     $scope.loginUser = function() {
       var userInfo = {
@@ -48,12 +60,12 @@ app.controller("LoginController", function($scope, $http, $location, UserData) {
         data: userInfo
       }).then(function mySuccess(response) {
           data = response.data;
-          $scope.token = data.token
+          UserData.setToken(data.token)          
           $http({
             method: "GET",
             url: "users/profile",
             headers: {
-              'x-access-token': $scope.token
+              'x-access-token': UserData.getToken()
             }
           }).then(function(response){
             UserData.setUser(response.data)
@@ -66,15 +78,55 @@ app.controller("LoginController", function($scope, $http, $location, UserData) {
     }
 });
 
-app.controller('ProfileController', function($scope, $http, UserData){
+app.controller('ProfileController', function($scope, $http, $location, UserData){
   $scope.profile = UserData.getUser()
   console.log($scope.profile);
+  $scope.goHome = function() {
+    $location.path('/')
+  }
+  $scope.updateUserProfile = function() {
+    $location.path('update')
+  }
 
 })
 
-app.controller('RegisterController', function($scope, $http){
+app.controller('UpdateController', function($scope, $http, $location, UserData){
+
+  $scope.user = UserData.getUser()
+  $message = ""
+
+  $scope.goHome = function() {
+    $location.path('/')
+  }
+  $scope.updateUser = function() {
+    userData = {
+      username: $scope.user.username,
+      password: $scope.user.password,
+      email: $scope.user.email,
+      dob: $scope.user.dob,
+      status: $scope.user.status      
+    }
+    typeof(userData.dob)
+    $http({
+          method : "PUT",
+          url : "users/update",
+          data: userData,
+          headers: {
+              'x-access-token': UserData.getToken()
+            }
+        }).then(function mySuccess(response) {
+            $message = response.data;                       
+        }, function myError(response) {
+            $scope.message = response.statusText;
+        });
+  }
+
+})
+
+app.controller('RegisterController', function($scope, $http, $location, UserData){
 
       $scope.user = {};
+      $message = ""
 
       $scope.registerUser = function() {
         var userData = {
@@ -89,11 +141,12 @@ app.controller('RegisterController', function($scope, $http){
           url : "users/register",
           data: userData
         }).then(function mySuccess(response) {
-            responseData = response.data;
-            console.log(responseData);
+            $scope.message = response.data;
+            $scope.profile = UserData.setUser(userData)
+            $location.path("profile");            
+
         }, function myError(response) {
             $scope.message = response.statusText;
-            console.log("Login not successful");
         });
 
       }
