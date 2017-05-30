@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <p style="margin-bottom:30px;"></p>
+      <form class="form-horizontal">
+        <div class="well">
+          <h3 class="text-warning">Register with us</h3>
+          <p style="margin-bottom:30px;"></p>
+          <div class="form-group">
+            <label for="username" class="col-lg-2 control-label">Username</label>
+            <div class="col-lg-10">
+              <input type="text" class="form-control" placeholder="username" ng-model="user.username" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-lg-2 control-label">Password</label>
+            <div class="col-lg-10">
+              <input type="password" class="form-control" placeholder="password" ng-model="user.password" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-lg-2 control-label">Email</label>
+            <div class="col-lg-10">
+              <input type="email" class="form-control" placeholder="email" ng-model="user.email" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dob" class="col-lg-2 control-label">Date of Birth</label>
+            <div class="col-lg-10">
+              <input type="date" class="form-control" ng-model="user.dob" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status" class="col-lg-2 control-label">Status</label>
+            <div class="col-lg-10">
+              <textarea rows="2" class="form-control" placeholder="Describe yourself in not more than 150 words" ng-model="user.status"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <button type="reset" class="btn btn-default">Cancel</button>
+              <button type="submit" class="btn btn-primary" ng-click="registerUser()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</div>
