@@ -48,6 +48,7 @@ app.factory('UserData', function(){
 
 app.controller("LoginController", function($scope, $http, $location, UserData) {
     $scope.user = {};
+    $scope.message = ""
 
     $scope.loginUser = function() {
       var userInfo = {
@@ -99,23 +100,31 @@ app.controller('UpdateController', function($scope, $http, $location, UserData){
     $location.path('/')
   }
   $scope.updateUser = function() {
-    userData = {
-      username: $scope.user.username,
-      password: $scope.user.password,
-      email: $scope.user.email,
-      dob: $scope.user.dob,
-      status: $scope.user.status      
+    newuser = {}
+    previousUser = UserData.getUser()
+    if(previousUser.username != $scope.user.username) {
+      newUser.username = $scope.user.username;
     }
-    typeof(userData.dob)
+    if(previousUser.email != $scope.user.email) {
+      newUser.email = $scope.user.email;
+    }
+    if(previousUser.dob != $scope.user.dob) {
+      newUser.dob = $scope.user.dob;
+    }
+    if(previousUser.status != $scope.user.status) {
+      newUser.status = $scope.user.status;
+    }
     $http({
           method : "PUT",
           url : "users/update",
-          data: userData,
+          data: newuser,
           headers: {
               'x-access-token': UserData.getToken()
             }
         }).then(function mySuccess(response) {
-            $message = response.data;                       
+            $scope.message = response.data.status;
+            $location.path('profile')
+            console.log()                       
         }, function myError(response) {
             $scope.message = response.statusText;
         });

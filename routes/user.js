@@ -14,7 +14,7 @@ router.get('/profile', Verify.verifyOrdinaryUser, function(req, res, next){
 
 router.put('/update', Verify.verifyOrdinaryUser, function(req, res, next){
     userid = req.decoded._doc._id
-    User.findByIdAndUpdate(userid, {$set: req.body}, {new: true}, function(err, user){
+    User.findByIdAndUpdate(userid, {$set: req.body}, {new: true}, function(err, user){      
       if(err) throw err;     
       return res.status(200).json({status: 'updation successful!!!'});
     })
